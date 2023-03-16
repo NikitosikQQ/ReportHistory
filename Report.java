@@ -45,8 +45,8 @@ public class Report {
     }
 
     public static String reportHistory(List<Report> reports, String studentUserName, int count) {
-        List<Report> list = reports.stream().sorted(ComparatorReport::compare).limit(count).collect(Collectors.toList());
-        Collections.reverse(list);
-        return reportListToString(list);
+        List<Report> sortedReports = reports.stream().sorted(ComparatorReport::compare).limit(count).collect(Collectors.toList());
+        Collections.reverse(sortedReports);
+        return reportListToString(sortedReports);
     }
 }
