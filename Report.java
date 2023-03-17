@@ -46,12 +46,12 @@ public class Report {
                 .sorted(ComparatorReport::compareDecreaseOfDate)
                 .limit(count)
                 .sorted(ComparatorReport::compareIncreaseOfDate)
-                .map(info -> {
+                .map(report -> {
                     StringBuilder sb = new StringBuilder();
-                    sb.append(info.getStudentUserName() + "\n");
-                    sb.append(info.getDate() + "\n");
-                    sb.append(info.getHours() + "\n");
-                    sb.append(info.getTitle() + "\n");
+                    sb.append(report.getStudentUserName() + "\n");
+                    sb.append(report.getDate() + "\n");
+                    sb.append(report.getHours() + "\n");
+                    sb.append(report.getTitle() + "\n");
                     return sb.toString();
                 })
                 .collect(Collectors.joining("_____________________" + "\n"));
