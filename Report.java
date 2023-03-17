@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static RepHistory.ReportListToString.reportListToString;
 
 public class Report {
 
@@ -43,11 +42,19 @@ public class Report {
     }
 
     public static String reportHistory(List<Report> reports, String studentUserName, int count) {
-        List<Report> sortedReports = reports.stream()
+        String sortedReports = reports.stream()
                 .sorted(ComparatorReport::compareDecreaseOfDate)
                 .limit(count)
                 .sorted(ComparatorReport::compareIncreaseOfDate)
-                .collect(Collectors.toList());
-        return reportListToString(sortedReports);
+                .map(info -> {
+                    StringBuilder sb = new StringBuilder();
+                    sb.append(info.getStudentUserName() + "\n");
+                    sb.append(info.getDate() + "\n");
+                    sb.append(info.getHours() + "\n");
+                    sb.append(info.getTitle() + "\n");
+                    return sb.toString();
+                })
+                .collect(Collectors.joining("_____________________" + "\n"));
+        return sortedReports;
     }
 }
