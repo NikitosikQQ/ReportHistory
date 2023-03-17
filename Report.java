@@ -1,10 +1,8 @@
 package RepHistory;
 
 import java.time.LocalDate;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static RepHistory.ReportListToString.reportListToString;
 
@@ -45,8 +43,11 @@ public class Report {
     }
 
     public static String reportHistory(List<Report> reports, String studentUserName, int count) {
-        List<Report> sortedReports = reports.stream().sorted(ComparatorReport::compare).limit(count).collect(Collectors.toList());
-        Collections.reverse(sortedReports);
+        List<Report> sortedReports = reports.stream()
+                .sorted(ComparatorReport::compareDecreaseOfDate)
+                .limit(count)
+                .sorted(ComparatorReport::compareIncreaseOfDate)
+                .collect(Collectors.toList());
         return reportListToString(sortedReports);
     }
 }

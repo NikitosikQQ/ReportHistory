@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static RepHistory.Report.reportHistory;
-import static RepHistory.ComparatorReport.compare;
 
 public class Main {
 
