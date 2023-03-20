@@ -42,19 +42,20 @@ public class Report {
     }
 
     public static String reportHistory(List<Report> reports, String studentUserName, int count) {
-        String sortedReports = reports.stream()
+        return reports.stream()
+                .filter(report -> report.getStudentUserName().equals(studentUserName))
                 .sorted(ComparatorReport::compareDecreaseOfDate)
                 .limit(count)
                 .sorted(ComparatorReport::compareIncreaseOfDate)
-                .map(report -> {
-                    StringBuilder sb = new StringBuilder();
-                    sb.append(report.getStudentUserName() + "\n");
-                    sb.append(report.getDate() + "\n");
-                    sb.append(report.getHours() + "\n");
-                    sb.append(report.getTitle() + "\n");
-                    return sb.toString();
-                })
+                .map(report -> report.toString())
                 .collect(Collectors.joining("_____________________" + "\n"));
-        return sortedReports;
+    }
+
+    @Override
+    public String toString() {
+        return studentUserName + '\n'
+                + date + '\n'
+                + hours + '\n'
+                + title + '\n';
     }
 }
