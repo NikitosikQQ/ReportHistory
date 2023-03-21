@@ -45,12 +45,12 @@ public class Report {
     }
 
     public static String reportHistory(List<Report> reports, String studentUserName, int count) {
-        Function<Report, LocalDate> sortOfDate = report -> report.getDate();
+        Function<Report, LocalDate> getDate = report -> report.getDate();
         return reports.stream()
                 .filter(report -> report.getStudentUserName().equals(studentUserName))
-                .sorted(Comparator.comparing(sortOfDate).reversed())
+                .sorted(Comparator.comparing(getDate).reversed())
                 .limit(count)
-                .sorted(Comparator.comparing(sortOfDate))
+                .sorted(Comparator.comparing(getDate))
                 .map(report -> report.toString())
                 .collect(Collectors.joining("_____________________" + "\n"));
     }
