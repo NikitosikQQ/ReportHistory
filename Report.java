@@ -2,6 +2,8 @@ package RepHistory;
 
 import java.time.LocalDate;
 import java.time.chrono.ChronoLocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
@@ -45,14 +47,37 @@ public class Report {
     }
 
     public static String reportHistory(List<Report> reports, String studentUserName, int count) {
-        Function<Report, LocalDate> getDate = report -> report.getDate();
         return reports.stream()
                 .filter(report -> report.getStudentUserName().equals(studentUserName))
-                .sorted(Comparator.comparing(getDate).reversed())
+                .sorted(Comparator.comparing(Report::getDate).reversed())
                 .limit(count)
-                .sorted(Comparator.comparing(getDate))
+                .sorted(Comparator.comparing(Report::getDate))
                 .map(report -> report.toString())
                 .collect(Collectors.joining("_____________________" + "\n"));
+    }
+
+    public static String reportHistoryTwo(List<Report> reports, String studentUserName, int count) {
+        Function<Report, LocalDate> getDate = report -> report.getDate();
+        StringBuilder sb = new StringBuilder();
+        List<Report> currentReports = new ArrayList<>();
+        Collections.sort(reports, Comparator.comparing(getDate).reversed());
+        for (int i = 0; i < reports.size(); i++) {
+            if (reports.get(i).getStudentUserName().equals(studentUserName)) {
+                if (count != 0) {
+                    currentReports.add(reports.get(i));
+                    count--;
+                }
+            }
+        }
+        Collections.sort(currentReports, Comparator.comparing(getDate));
+        for (int i = 0; i < currentReports.size(); i++) {
+            sb.append(currentReports.get(i));
+            if (i != currentReports.size() - 1){
+                sb.append("_______________________" + '\n');
+            }
+        }
+
+        return sb.toString();
     }
 
     @Override

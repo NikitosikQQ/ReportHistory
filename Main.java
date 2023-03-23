@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static RepHistory.Report.reportHistory;
+import static RepHistory.Report.reportHistoryTwo;
 
 public class Main {
 
@@ -13,15 +14,15 @@ public class Main {
         Report report1 = new Report(1l, "no_punkz", 1,
                 LocalDate.of(2021, 9, 25),
                 "Из-за внешних факторов все никак не могу сделать " + "задачу" +
-                " со стримами, не хватило времени");
+                        " со стримами, не хватило времени");
         Report report2 = new Report(2l, "no_punkz", 5,
                 LocalDate.of(2021, 9, 27),
                 "Продолжаю мучать предпоследнюю задачу (теперь и " +
-                "Толяна), собес на котором узнал много нового");
+                        "Толяна), собес на котором узнал много нового");
         Report report3 = new Report(3l, "no_punkz", 2,
                 LocalDate.of(2021, 9, 26),
                 "Бился над компаратором, пытался накостылить через " +
-                "видимую внешнюю переменную, начал читать о решениях из чата");
+                        "видимую внешнюю переменную, начал читать о решениях из чата");
         Report report4 = new Report(4l, "no_punkz", 6,
                 LocalDate.of(2021, 9, 23), "тестовый");
         Report report5 = new Report(5l, "no_punkz", 3,
@@ -42,10 +43,28 @@ public class Main {
         list.add(report7);
         list.add(report8);
 
+        int k = 0;
 
-        System.out.println(reportHistory(list, "no_punkz", 3));
+        long startTimeCycle = System.currentTimeMillis();
+        while (k <= 1000000) {
+            reportHistoryTwo(list, "no_punkz", 3);
+            k++;
+        }
+        long timeCycle = System.currentTimeMillis() - startTimeCycle;
+        System.out.println("Время затраченное на циклы: " + timeCycle);
 
 
+
+        long startTimeStream = System.currentTimeMillis();
+        k = 0;
+        while (k <= 1000000) {
+            reportHistory(list, "no_punkz", 3);
+            k++;
+        }
+        long timeStream = System.currentTimeMillis() - startTimeStream;
+        System.out.println("Время затраченное на cтрим: " + timeStream);
+
+        System.out.println(reportHistory(list, "no_punkz", 2));
 
     }
 }
